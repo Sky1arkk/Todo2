@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<freshMvvm:FreshBaseContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                                xmlns:freshMvvm="clr-namespace:FreshMvvm;assembly=FreshMvvm"
+                                xmlns:converters="clr-namespace:Todo2.Pages.Converters;assembly=Todo2"
+                                x:Class="Todo2.Pages.TaskItemListPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:PriorityTextConverter x:Key="PriorityTextConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ListView ItemsSource="{Binding TaskList}" SelectedItem="{Binding SelectedTaskItem, Mode=TwoWay}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding Priority, Converter={StaticResource PriorityTextConverter}}" VerticalTextAlignment="Center"></Label>
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="{Binding Name}"></Label>
+                                <Label Text="{Binding Date, StringFormat='{0:dd/MM/yyyy}'}"></Label>
+                            </StackLayout>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ContentPage.Content>
+</freshMvvm:FreshBaseContentPage>
