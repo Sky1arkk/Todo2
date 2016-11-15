@@ -6,18 +6,22 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:PriorityTextConverter x:Key="PriorityTextConverter" />
+            <converters:PriorityLabelColorConverter x:Key="PriorityLabelColorConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <ListView ItemsSource="{Binding TaskList}" SelectedItem="{Binding SelectedTaskItem, Mode=TwoWay}">
+        <ListView ItemsSource="{Binding TaskList}" SelectedItem="{Binding SelectedTaskItem, Mode=TwoWay}" RowHeight="{DynamicResource rowHeigh}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding Priority, Converter={StaticResource PriorityTextConverter}}" VerticalTextAlignment="Center"></Label>
-                            <StackLayout Orientation="Vertical">
-                                <Label Text="{Binding Name}"></Label>
-                                <Label Text="{Binding Date, StringFormat='{0:dd/MM/yyyy}'}"></Label>
+                            <Label Text="{Binding Priority, Converter={StaticResource PriorityTextConverter}}" 
+                                   BackgroundColor="{Binding Priority, Converter={StaticResource PriorityLabelColorConverter}}"
+                                   VerticalTextAlignment="Center" HorizontalTextAlignment="Center"
+                                   Style="{DynamicResource priorityLabelStyle}"></Label>
+                            <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
+                                <Label Text="{Binding Name}" Style="{DynamicResource nameLabelStyle}"></Label>
+                                <Label Text="{Binding Date, StringFormat='{0:dd/MM/yyyy}'}" Style="{DynamicResource nameLabelStyle}"></Label>
                             </StackLayout>
                         </StackLayout>
                     </ViewCell>

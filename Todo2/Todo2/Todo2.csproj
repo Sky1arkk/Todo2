@@ -41,6 +41,7 @@
     <Compile Include="Models\TaskItem.cs" />
     <Compile Include="PageModels\TaskItemListPageModel.cs" />
     <Compile Include="PageModels\TaskItemPageModel.cs" />
+    <Compile Include="Pages\Converters\PriorityLabelColorConverter.cs" />
     <Compile Include="Pages\Converters\PriorityTextConverter.cs" />
     <Compile Include="Pages\TaskItemListPage.xaml.cs">
       <DependentUpon>TaskItemListPage.xaml</DependentUpon>

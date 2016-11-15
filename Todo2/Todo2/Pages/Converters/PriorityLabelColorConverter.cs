@@ -1,24 +1,28 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Todo2.Pages.Converters
 {
-    class PriorityTextConverter : IValueConverter
+    class PriorityLabelColorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string priority = "L";
+            Color priority = Color.Gray;
             switch ((int)value)
             {
                 case 0:
-                    priority = "L";
+                    priority = Color.FromHex("#90EE90");
                     break;
                 case 1:
-                    priority = "M";
+                    priority = Color.FromHex("#FFEB3B");
                     break;
                 case 2:
-                    priority = "H";
+                    priority = Color.FromHex("#F44336");
                     break;
             }
             return priority;
