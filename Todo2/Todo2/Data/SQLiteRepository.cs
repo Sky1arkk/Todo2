@@ -10,87 +10,122 @@ namespace Todo2.Data
 {
     public class SQLiteRepository : IRepository
     {
-        private readonly SQLiteConnection _connection;
         private SQLiteCommand _command;
-        public string StatusMessage { get; set; }
+        private readonly string _dbPath;
 
         public SQLiteRepository(string dbPath)
         {
-            _connection = new SQLiteConnection(dbPath);
-            _connection.CreateTable<TaskItem>();
+            _dbPath = dbPath;
+
+            using (var connection = new SQLiteConnection(dbPath))
+            {
+                try
+                {
+                    connection.BeginTransaction();
+                    connection.CreateTable<TaskItem>();
+                    connection.Commit();
+                }
+                catch (SQLiteException)
+                {
+                    connection.Rollback();
+                }
+            }
         }
 
         public List<TaskItem> GetAllTasks()
         {
-            return _connection.Table<TaskItem>().ToList();
+            using (var connection = new SQLiteConnection(_dbPath))
+            {
+                return connection.Table<TaskItem>().ToList();
+            }
         }
 
         public TaskItem GetTaskById(int id)
         {
-            return _connection.Table<TaskItem>().ElementAt(id);
+            using (var connection = new SQLiteConnection(_dbPath))
+            {
+                return connection.Table<TaskItem>().ElementAt(id);
+            }
         }
 
         public List<TaskItem> GetTasksByPriority(bool done)
         {
-            var doneToInt = done ? 1 : 0;
+            using (var connection = new SQLiteConnection(_dbPath))
+            {
+                var doneToInt = done ? 1 : 0;
 
-            _command = _connection.CreateCommand("SELECT * FROM [TaskItem] WHERE [Done] = ?", doneToInt);
-            return _command.ExecuteQuery<TaskItem>();
+                _command = connection.CreateCommand("SELECT * FROM [TaskItem] WHERE [Done] = ?", doneToInt);
+                return _command.ExecuteQuery<TaskItem>();
+            }
         }
 
         public bool DeleteTasks(List<TaskItem> tasks)
         {
-
-            foreach (var element in tasks)
+            using (var connection = new SQLiteConnection(_dbPath))
             {
-                try
+                foreach (var element in tasks)
                 {
-                    _command = _connection.CreateCommand("DELETE FROM TaskItem WHERE Id = ?", element.Id);
-                    _command.ExecuteNonQuery();
+                    try
+                    {
+                        _command = connection.CreateCommand("DELETE FROM TaskItem WHERE Id = ?", element.Id);
+                        connection.BeginTransaction();
+                        _command.ExecuteNonQuery();
+                        connection.Commit();
+                    }
+                    catch (SQLiteException)
+                    {
+                        connection.Rollback();
+                        return false;
+                    }
                 }
-                catch (SQLiteException ex)
-                {
-                    StatusMessage = $"Failed to delete contact: {element.Name}. Error: {ex.Message}";
-                    return false;
-                }
+                return true;
             }
-            return true;
         }
 
         public bool UpsertTask(TaskItem task)
         {
-            int result;
-            try
+            using (var connection = new SQLiteConnection(_dbPath))
             {
-                if (string.IsNullOrWhiteSpace(task.Name))
-                    throw new Exception("Name is required");
+                int result;
+                try
+                {
+                    if (string.IsNullOrWhiteSpace(task.Name))
+                        return false;
 
-                result = _connection.InsertOrReplace(task);
-            }
-            catch (SQLiteException ex)
-            {
-                StatusMessage = $"Failed to create task: {task.Name}. Error: {ex.Message}";
+                    connection.BeginTransaction();
+                    result = connection.InsertOrReplace(task);
+                    connection.Commit();
+                }
+                catch (SQLiteException)
+                {
+                    connection.Rollback();
+                    return false;
+                }
+                if (result > 0)
+                {
+                    return true;
+                }
                 return false;
             }
-            if (result > 0)
-            {
-                return true;
-            }
-            return false;
         }
 
         public bool DeleteTaskById(int id)
         {
-            try
+            using (var connection = new SQLiteConnection(_dbPath))
             {
-                _command = _connection.CreateCommand("DELETE FROM TaskItem WHERE Id = ?", id);
-                _command.ExecuteNonQuery();
-                return true;
-            }
-            catch (SQLiteException ex)
-            {
-                StatusMessage = $"Failed to delete contact with Id: {id}. Error: {ex.Message}";
-                return false;
+                try
+                {
+                    _command = connection.CreateCommand("DELETE FROM TaskItem WHERE Id = ?", id);
+                    connection.BeginTransaction();
+                    _command.ExecuteNonQuery();
+                    connection.Commit();
+                    return true;
+                }
+                catch (SQLiteException)
+                {
+                    connection.Rollback();
+                    return false;
+                }
             }
         }
     }
