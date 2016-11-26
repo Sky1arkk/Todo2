@@ -13,7 +13,7 @@ namespace Todo2
     public class App : Application
     {
         public static Size ScreenSize;
-        public double ScreenSizeCoefficient;
+        public static double ScreenSizeCoefficient;
 
         public static SQLiteRepository Repository;
 

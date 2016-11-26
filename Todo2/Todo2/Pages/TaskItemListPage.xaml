@@ -23,6 +23,7 @@
                                 <Label Text="{Binding Name}" Style="{DynamicResource nameLabelStyle}"></Label>
                                 <Label Text="{Binding Date, StringFormat='{0:dd/MM/yyyy}'}" Style="{DynamicResource nameLabelStyle}"></Label>
                             </StackLayout>
+                            <Image Source="check.png" HorizontalOptions="EndAndExpand"></Image>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

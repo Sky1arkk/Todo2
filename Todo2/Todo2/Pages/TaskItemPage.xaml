@@ -1,19 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <freshMvvm:FreshBaseContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                                 xmlns:freshMvvm="clr-namespace:FreshMvvm;assembly=FreshMvvm"
+                                xmlns:customControls="clr-namespace:Todo2.Pages.CustomControls;assembly=Todo2"
                                 x:Class="Todo2.Pages.TaskItemPage" Title="{Binding TaskItem.Name}">
     <ContentPage.Content>
         <StackLayout>
             <Entry Text="{Binding TaskItem.Name}" Style="{DynamicResource entryStyle}"></Entry>
             <Entry Text="{Binding TaskItem.Note, Mode=TwoWay}" Style="{DynamicResource entryStyle}"></Entry>
-            <Picker SelectedIndex="{Binding TaskItem.Priority, Mode=TwoWay}">
+            <customControls:PriorityPicker SelectedIndex="{Binding TaskItem.Priority, Mode=TwoWay}">
                 <Picker.Items>
                     <x:String>Low</x:String>
                     <x:String>Medium</x:String>
                     <x:String>High</x:String>
                 </Picker.Items>
-            </Picker>
-            <DatePicker Date="{Binding TaskItem.Date, Mode=TwoWay}" Format="D"></DatePicker>
+            </customControls:PriorityPicker>
+            <customControls:CustomDatePicker Date="{Binding TaskItem.Date, Mode=TwoWay}" Format="D"></customControls:CustomDatePicker>
             <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
                 <Button Text="Save" Command="{Binding SaveCommand}" Style="{DynamicResource buttonStyle}" ></Button>
                 <Button Text="Delete" Command="{Binding DeleteCommand}" Style="{DynamicResource buttonStyle}"></Button>

@@ -9,6 +9,7 @@ using Android.OS;
 using FreshMvvm;
 using Todo2.Data;
 using Xamarin.Forms;
+using View = Android.Views.View;
 
 namespace Todo2.Droid
 {
