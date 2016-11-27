@@ -18,6 +18,7 @@ namespace Todo2.Models
         public string Note { get; set; }
         public int Priority { get; set; }
         public DateTime Date { get; set; }
+        public bool IsDone { get; set; }
 
         public bool IsValid()
         {

@@ -76,18 +76,38 @@ namespace Todo2
                 { new Setter { Property = Label.FontSizeProperty, Value = 7*ScreenSizeCoefficient } }
             };
 
+            var switchLabelStyle = new Style(typeof(Label))
+            {
+                Setters =
+                {
+                    new Setter { Property = Label.FontSizeProperty, Value = 10*ScreenSizeCoefficient },
+                    new Setter { Property = Label.MarginProperty, Value = 4*ScreenSizeCoefficient },
+                    new Setter { Property = Label.TextColorProperty, Value = Color.Black }
+                }
+            };
+
             var entryStyle = new Style(typeof(Entry))
             {
                 Setters =
                 {
-                    new Setter {Property = Entry.FontSizeProperty, Value = 8*ScreenSizeCoefficient}
+                    new Setter { Property = Entry.FontSizeProperty, Value = 8*ScreenSizeCoefficient }
+                }
+            };
+
+            var doneImageStyle = new Style(typeof(Image))
+            {
+                Setters =
+                {
+                    new Setter { Property = Image.MarginProperty, Value = 2*ScreenSizeCoefficient }
                 }
             };
 
             Resources.Add("buttonStyle", buttonStyle);
             Resources.Add("priorityLabelStyle", priorityLabelStyle);
             Resources.Add("nameLabelStyle", nameLabelStyle);
+            Resources.Add("switchLabelStyle", switchLabelStyle);
             Resources.Add("entryStyle", entryStyle);
+            Resources.Add("doneImageStyle", doneImageStyle);
             Resources.Add("rowHeigh", (int)(25 * ScreenSizeCoefficient));
         }
     }

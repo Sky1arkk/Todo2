@@ -29,7 +29,8 @@ namespace Todo2.PageModels
                 Name = tempItem.Name,
                 Note = tempItem.Note,
                 Priority = tempItem.Priority,
-                Date = tempItem.Date
+                Date = tempItem.Date,
+                IsDone = tempItem.IsDone
             };
         }
 
@@ -43,6 +44,10 @@ namespace Todo2.PageModels
                     {
                         _repository.UpsertTask(TaskItem);
                         CoreMethods.PopPageModel(TaskItem);
+                    }
+                    else
+                    {
+                        CoreMethods.DisplayAlert("Something went wrong", "Title field cannot be empty", "OK");
                     }
                 }));
             }

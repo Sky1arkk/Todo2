@@ -4,9 +4,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using FreshMvvm;
 using Todo2.Data;
 using Todo2.Models;
+using Xamarin.Forms;
 
 namespace Todo2.PageModels
 {
@@ -34,10 +36,6 @@ namespace Todo2.PageModels
         public override void Init(object data)
         {
             LoadTasksFromRepository();
-            if (TaskList.Count < 1)
-            {
-                CreateSampleTasks();
-            }
         }
 
         public override void ReverseInit(object data)
@@ -55,28 +53,66 @@ namespace Todo2.PageModels
                 TaskList.Add(task);
             }
         }
-
-        private void CreateSampleTasks()
+        
+        public ICommand AddTaskCommand
         {
-            var firstTask = new TaskItem
+            get
             {
-                Name = "wwwwww",
-                Note = "qqqqqq",
-                Priority = 1,
-                Date = DateTime.Today
-            };
-            var secondTask = new TaskItem
+                return new Command(() =>
+                {
+                    CoreMethods.PushPageModel<TaskItemPageModel>(new TaskItem {Date = DateTime.Today});
+                });
+            }
+        }
+
+        public ICommand SortTasksByPriorityCommand
+        {
+            get
             {
-                Name = "tttttt",
-                Note = "hhhhhh",
-                Priority = 1,
-                Date = DateTime.Today
-            };
+                return new Command(() =>
+                {
+                    var taskItemsList = _repository.GetAllTasks();
+                    taskItemsList = taskItemsList.OrderBy(item => item.Priority).ToList();
+                    var tasksList = new ObservableCollection<TaskItem>();
+                    foreach (var task in taskItemsList)
+                    {
+                        tasksList.Add(task);
+                    }
 
-            _repository.UpsertTask(firstTask);
-            _repository.UpsertTask(secondTask);
+                    TaskList = tasksList;
+                });
+            }
+        }
 
-            LoadTasksFromRepository();
+        public ICommand SortTasksByDateCommand
+        {
+            get
+            {
+                return new Command(() =>
+                {
+                    var taskItemsList = _repository.GetAllTasks();
+                    taskItemsList = taskItemsList.OrderBy(item => item.Date).ToList();
+                    var tasksList = new ObservableCollection<TaskItem>();
+                    foreach (var task in taskItemsList)
+                    {
+                        tasksList.Add(task);
+                    }
+
+                    TaskList = tasksList;
+                });
+            }
+        }
+
+        public ICommand DeleteCompletedTasksCommand
+        {
+            get
+            {
+                return new Command(() =>
+                {
+                    _repository.DeleteTasks(_repository.GetTasksByReadiness(true));
+                    LoadTasksFromRepository();
+                });
+            }
         }
     }
 }

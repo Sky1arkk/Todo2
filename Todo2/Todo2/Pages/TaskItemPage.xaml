@@ -5,8 +5,8 @@
                                 x:Class="Todo2.Pages.TaskItemPage" Title="{Binding TaskItem.Name}">
     <ContentPage.Content>
         <StackLayout>
-            <Entry Text="{Binding TaskItem.Name}" Style="{DynamicResource entryStyle}"></Entry>
-            <Entry Text="{Binding TaskItem.Note, Mode=TwoWay}" Style="{DynamicResource entryStyle}"></Entry>
+            <Entry Text="{Binding TaskItem.Name, Mode = TwoWay}" Style="{DynamicResource entryStyle}" Placeholder="Title"></Entry>
+            <Entry Text="{Binding TaskItem.Note, Mode=TwoWay}" Style="{DynamicResource entryStyle}" Placeholder="Note"></Entry>
             <customControls:PriorityPicker SelectedIndex="{Binding TaskItem.Priority, Mode=TwoWay}">
                 <Picker.Items>
                     <x:String>Low</x:String>
@@ -15,6 +15,10 @@
                 </Picker.Items>
             </customControls:PriorityPicker>
             <customControls:CustomDatePicker Date="{Binding TaskItem.Date, Mode=TwoWay}" Format="D"></customControls:CustomDatePicker>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Done" Style="{DynamicResource switchLabelStyle}"></Label>
+                <Switch IsToggled="{Binding TaskItem.IsDone, Mode=TwoWay}" HorizontalOptions="Start"></Switch>
+            </StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
                 <Button Text="Save" Command="{Binding SaveCommand}" Style="{DynamicResource buttonStyle}" ></Button>
                 <Button Text="Delete" Command="{Binding DeleteCommand}" Style="{DynamicResource buttonStyle}"></Button>

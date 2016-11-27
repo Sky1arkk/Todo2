@@ -48,38 +48,24 @@ namespace Todo2.Data
             }
         }
 
-        public List<TaskItem> GetTasksByPriority(bool done)
+        public List<TaskItem> GetTasksByReadiness(bool done)
         {
             using (var connection = new SQLiteConnection(_dbPath))
             {
                 var doneToInt = done ? 1 : 0;
 
-                _command = connection.CreateCommand("SELECT * FROM [TaskItem] WHERE [Done] = ?", doneToInt);
+                _command = connection.CreateCommand("SELECT * FROM [TaskItem] WHERE [IsDone] = ?", doneToInt);
                 return _command.ExecuteQuery<TaskItem>();
             }
         }
 
         public bool DeleteTasks(List<TaskItem> tasks)
         {
-            using (var connection = new SQLiteConnection(_dbPath))
+            foreach (var element in tasks)
             {
-                foreach (var element in tasks)
-                {
-                    try
-                    {
-                        _command = connection.CreateCommand("DELETE FROM TaskItem WHERE Id = ?", element.Id);
-                        connection.BeginTransaction();
-                        _command.ExecuteNonQuery();
-                        connection.Commit();
-                    }
-                    catch (SQLiteException)
-                    {
-                        connection.Rollback();
-                        return false;
-                    }
-                }
-                return true;
+                DeleteTaskById((int) element.Id);
             }
+            return true;
         }
 
         public bool UpsertTask(TaskItem task)

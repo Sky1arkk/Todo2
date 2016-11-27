@@ -13,7 +13,7 @@ namespace Todo2.Data
 
         TaskItem GetTaskById(int id);
 
-        List<TaskItem> GetTasksByPriority(bool done);
+        List<TaskItem> GetTasksByReadiness(bool done);
         
         bool DeleteTasks(List<TaskItem> tasks);
 
