@@ -13,7 +13,7 @@
         <ToolbarItem Text="New task" Command="{Binding AddTaskCommand}"></ToolbarItem>
         <ToolbarItem Text="Sort by priority" Command="{Binding SortTasksByPriorityCommand}" Order="Secondary"></ToolbarItem>
         <ToolbarItem Text="Sort by date" Command="{Binding SortTasksByDateCommand}" Order="Secondary"></ToolbarItem>
-        <ToolbarItem Text="Delete completed tasks" Command="{Binding DeleteCompletedTasksCommand}" Order="Secondary"></ToolbarItem>
+        <ToolbarItem Text="Delete done tasks" Command="{Binding DeleteCompletedTasksCommand}" Order="Secondary"></ToolbarItem>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <ListView ItemsSource="{Binding TaskList}" SelectedItem="{Binding SelectedTaskItem, Mode=TwoWay}" RowHeight="{DynamicResource rowHeigh}">
