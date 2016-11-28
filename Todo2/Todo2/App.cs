@@ -110,7 +110,8 @@ namespace Todo2
             {
                 Setters =
                 {
-                    new Setter { Property = Editor.FontSizeProperty, Value = 8*ScreenSizeCoefficient }
+                    new Setter { Property = Editor.FontSizeProperty, Value = 8*ScreenSizeCoefficient },
+                    new Setter { Property = Editor.HeightRequestProperty, Value = 50*ScreenSizeCoefficient }
                 }
             };
 
