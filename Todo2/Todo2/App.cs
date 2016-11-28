@@ -50,13 +50,22 @@ namespace Todo2
             ScreenSizeCoefficient = Math.Sqrt(ScreenSize.Height*ScreenSize.Height + ScreenSize.Width*ScreenSize.Width)*0.004;
             Resources = new ResourceDictionary();
 
+            //Change defoult button text color for ios
+            var buttonTextColorSetter = new Setter();
+            Device.OnPlatform(() =>
+            {
+                buttonTextColorSetter.Property = Button.TextColorProperty;
+                buttonTextColorSetter.Value = Color.White;
+            });
+
             var buttonStyle = new Style(typeof(Button))
             {
                 Setters =
                 {
                     new Setter { Property  = Button.BackgroundColorProperty, Value = Color.FromHex("#2196F3") },
                     new Setter {Property = Button.WidthRequestProperty, Value = 40*ScreenSizeCoefficient },
-                    new Setter { Property = Button.FontSizeProperty, Value = 7*ScreenSizeCoefficient }
+                    new Setter { Property = Button.FontSizeProperty, Value = 7*ScreenSizeCoefficient },
+                    buttonTextColorSetter
                 }
             };
 
@@ -97,6 +106,14 @@ namespace Todo2
                 }
             };
 
+            var editorStyle = new Style(typeof(Editor))
+            {
+                Setters =
+                {
+                    new Setter { Property = Editor.FontSizeProperty, Value = 8*ScreenSizeCoefficient }
+                }
+            };
+
             var doneImageStyle = new Style(typeof(Image))
             {
                 Setters =
@@ -110,6 +127,7 @@ namespace Todo2
             Resources.Add("nameLabelStyle", nameLabelStyle);
             Resources.Add("switchLabelStyle", switchLabelStyle);
             Resources.Add("entryStyle", entryStyle);
+            Resources.Add("editorStyle", editorStyle);
             Resources.Add("doneImageStyle", doneImageStyle);
             Resources.Add("rowHeigh", (int)(25 * ScreenSizeCoefficient));
         }

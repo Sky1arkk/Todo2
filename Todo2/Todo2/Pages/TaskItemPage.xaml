@@ -6,7 +6,7 @@
     <ContentPage.Content>
         <StackLayout>
             <Entry Text="{Binding TaskItem.Name, Mode = TwoWay}" Style="{DynamicResource entryStyle}" Placeholder="Title"></Entry>
-            <Entry Text="{Binding TaskItem.Note, Mode=TwoWay}" Style="{DynamicResource entryStyle}" Placeholder="Note"></Entry>
+            <Editor Text="{Binding TaskItem.Note, Mode=TwoWay}" Style="{DynamicResource editorStyle}"></Editor>
             <customControls:PriorityPicker SelectedIndex="{Binding TaskItem.Priority, Mode=TwoWay}">
                 <Picker.Items>
                     <x:String>Low</x:String>
@@ -16,8 +16,8 @@
             </customControls:PriorityPicker>
             <customControls:CustomDatePicker Date="{Binding TaskItem.Date, Mode=TwoWay}" Format="D"></customControls:CustomDatePicker>
             <StackLayout Orientation="Horizontal">
-                <customControls:CustomLabel Text="Done" Style="{DynamicResource switchLabelStyle}"></customControls:CustomLabel>
-                <customControls:CustomSwitch IsToggled="{Binding TaskItem.IsDone, Mode=TwoWay}" HorizontalOptions="Start"></customControls:CustomSwitch>
+                <customControls:CustomLabel Text="Done" Style="{DynamicResource switchLabelStyle}" VerticalOptions="Center"></customControls:CustomLabel>
+                <customControls:CustomSwitch IsToggled="{Binding TaskItem.IsDone, Mode=TwoWay}" VerticalOptions="Center" HorizontalOptions="Start"></customControls:CustomSwitch>
             </StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
                 <Button Text="Save" Command="{Binding SaveCommand}" Style="{DynamicResource buttonStyle}" ></Button>
