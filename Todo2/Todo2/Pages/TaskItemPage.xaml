@@ -16,8 +16,8 @@
             </customControls:PriorityPicker>
             <customControls:CustomDatePicker Date="{Binding TaskItem.Date, Mode=TwoWay}" Format="D"></customControls:CustomDatePicker>
             <StackLayout Orientation="Horizontal">
-                <Label Text="Done" Style="{DynamicResource switchLabelStyle}"></Label>
-                <Switch IsToggled="{Binding TaskItem.IsDone, Mode=TwoWay}" HorizontalOptions="Start"></Switch>
+                <customControls:CustomLabel Text="Done" Style="{DynamicResource switchLabelStyle}"></customControls:CustomLabel>
+                <customControls:CustomSwitch IsToggled="{Binding TaskItem.IsDone, Mode=TwoWay}" HorizontalOptions="Start"></customControls:CustomSwitch>
             </StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
                 <Button Text="Save" Command="{Binding SaveCommand}" Style="{DynamicResource buttonStyle}" ></Button>

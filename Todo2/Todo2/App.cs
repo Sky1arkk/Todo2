@@ -73,7 +73,11 @@ namespace Todo2
             var nameLabelStyle = new Style(typeof(Label))
             {
                 Setters =
-                { new Setter { Property = Label.FontSizeProperty, Value = 7*ScreenSizeCoefficient } }
+                {
+                    new Setter { Property = Label.FontSizeProperty, Value = 7*ScreenSizeCoefficient },
+                    new Setter { Property = Label.WidthRequestProperty, Value = 80*ScreenSizeCoefficient },
+                    new Setter { Property = Label.LineBreakModeProperty, Value = LineBreakMode.TailTruncation }
+                }
             };
 
             var switchLabelStyle = new Style(typeof(Label))
@@ -81,8 +85,7 @@ namespace Todo2
                 Setters =
                 {
                     new Setter { Property = Label.FontSizeProperty, Value = 10*ScreenSizeCoefficient },
-                    new Setter { Property = Label.MarginProperty, Value = 4*ScreenSizeCoefficient },
-                    new Setter { Property = Label.TextColorProperty, Value = Color.Black }
+                    new Setter { Property = Label.MarginProperty, Value = 4*ScreenSizeCoefficient }
                 }
             };
 

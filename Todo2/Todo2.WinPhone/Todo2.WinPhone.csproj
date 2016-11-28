@@ -85,6 +85,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControlRenderers\CustomLabelRenderer.cs" />
+    <Compile Include="CustomControlRenderers\CustomSwitchRenderer.cs" />
     <Compile Include="FileAccessHelper.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
