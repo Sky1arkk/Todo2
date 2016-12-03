@@ -72,26 +72,22 @@ namespace Todo2.Data
         {
             using (var connection = new SQLiteConnection(_dbPath))
             {
-                int result;
                 try
                 {
-                    if (string.IsNullOrWhiteSpace(task.Name))
+                    if (!task.IsValid())
                         return false;
 
                     connection.BeginTransaction();
-                    result = connection.InsertOrReplace(task);
+                    connection.InsertOrReplace(task);
                     connection.Commit();
+
+                    return true;
                 }
                 catch (SQLiteException)
                 {
                     connection.Rollback();
                     return false;
                 }
-                if (result > 0)
-                {
-                    return true;
-                }
-                return false;
             }
         }
 
